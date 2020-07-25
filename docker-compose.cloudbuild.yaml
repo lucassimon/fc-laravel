@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  app:
+    build: ./app/
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - ./app:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+    depends_on:
+      - db
+      - redis
+  # Nginx Service
+  webserver:
+    build: ./nginx/
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:80"
+    volumes:
+      - ./app:/var/www
+    networks:
+      - app-network
+    environment:
+      - APP=app
+      - PORT=9000
+    depends_on:
+      - app
+  #MySQL Service
+  db:
+    build: ./mysql/
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_USER: root
+    volumes:
+      - ./mysql/dbdata:/var/lib/mysql
+    networks:
+      - app-network
+  # Redis Service
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    expose:
+      - 6379
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
