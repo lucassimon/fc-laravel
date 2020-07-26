@@ -17,26 +17,47 @@ steps:
   - id: "Rodando catt"
     name: "gcr.io/cloud-builders/docker"
     args: ["exec", "-u", "root", "-t", "app", "cat", ".env"]
-  # - id: "Rodando generate"
-  #   name: "gcr.io/cloud-builders/docker"
-  #   args: ["exec", "-u", "root", "-t", "app", "php", "/var/www/artisan", "key:generate"]
-  # - id: "Rodando config cache"
-  #   name: "gcr.io/cloud-builders/docker"
-  #   args: ["exec", "-u", "root", "-t", "app", "php", "/var/www/artisan", "config:cache"]
-  # - id: "Rodando migrate"
-  #   name: "gcr.io/cloud-builders/docker"
-  #   args: ["exec", "-u", "root", "-t", "app", "php", "/var/www/artisan", "migrate"]
-  # - id: "Rodando phpunit"
-  #   name: "gcr.io/cloud-builders/docker"
-  #   args:
-  #     [
-  #       "exec",
-  #       "-u",
-  #       "root",
-  #       "-t",
-  #       "app",
-  #       "php",
-  #       "/var/www/vendor/bin/phunit",
-  #       "-c",
-  #       "/var/www/phpunit.xml",
-  #     ]
+  - id: "Rodando generate"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "exec",
+        "-u",
+        "root",
+        "-t",
+        "app",
+        "php",
+        "/var/www/artisan",
+        "key:generate",
+      ]
+  - id: "Rodando config cache"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "exec",
+        "-u",
+        "root",
+        "-t",
+        "app",
+        "php",
+        "/var/www/artisan",
+        "config:cache",
+      ]
+  - id: "Rodando migrate"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      ["exec", "-u", "root", "-t", "app", "php", "/var/www/artisan", "migrate"]
+  - id: "Rodando phpunit"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "exec",
+        "-u",
+        "root",
+        "-t",
+        "app",
+        "php",
+        "/var/www/vendor/bin/phunit",
+        "-c",
+        "/var/www/phpunit.xml",
+      ]
