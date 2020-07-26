@@ -8,12 +8,12 @@ steps:
   - id: "Rodando composer"
     name: "gcr.io/cloud-builders/docker"
     args: ["exec", "-t", "app", "ls", "-la"]
+  - id: "Rodando copy .env"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-t", "app", "cp", ".env.example", ".env"]
   - id: "Rodando catt"
     name: "gcr.io/cloud-builders/docker"
     args: ["exec", "-t", "app", "cat", ".env"]
-  # - id: "Rodando copy .env"
-  #   name: "gcr.io/cloud-builders/docker"
-  #   args: ["exec", "-t", "app", "cp", ".env.example", ".env"]
   # - id: "Rodando generate"
   #   name: "gcr.io/cloud-builders/docker"
   #   args: ["exec", "-t", "app", "php", "/var/www/artisan", "key:generate"]
