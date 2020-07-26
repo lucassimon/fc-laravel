@@ -23,4 +23,4 @@ USER www-data
 
 EXPOSE 9000
 
-ENTRYPOINT [ "./boot.sh" ]
+ENTRYPOINT [ "php-fpm" ]

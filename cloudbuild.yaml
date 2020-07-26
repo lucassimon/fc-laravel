@@ -5,10 +5,22 @@ steps:
   - id: "Rodando docker ps"
     name: "gcr.io/cloud-builders/docker"
     args: ["ps"]
+  - id: "Rodando copy .env"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-t", "app", "cp", ".env.example", ".env"]
+  - id: "Rodando composer"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-t", "app", "composer", "install"]
+  - id: "Rodando generate"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-t", "app", "php", "/var/www/artisan", "key:generate"]
+  - id: "Rodando config cache"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-t", "app", "php", "/var/www/artisan", "config:cache"]
   - id: "Rodando migrate"
     name: "gcr.io/cloud-builders/docker"
     args: ["exec", "-t", "app", "php", "/var/www/artisan", "migrate"]
-  - id: "Rodadno phpnit"
+  - id: "Rodando phpunit"
     name: "gcr.io/cloud-builders/docker"
     args:
       [
