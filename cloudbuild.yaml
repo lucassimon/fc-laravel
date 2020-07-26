@@ -57,7 +57,7 @@ steps:
         "-t",
         "app",
         "php",
-        "/var/www/vendor/bin/phunit",
+        "/var/www/vendor/bin/phpunit",
         "-c",
         "/var/www/phpunit.xml",
       ]
