@@ -5,12 +5,12 @@ steps:
   - id: "Rodando docker ps"
     name: "gcr.io/cloud-builders/docker"
     args: ["ps"]
-  - id: "Rodando copy .env"
-    name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "cp", ".env.example", ".env"]
   - id: "Rodando composer"
     name: "gcr.io/cloud-builders/docker"
     args: ["exec", "-t", "app", "composer", "install"]
+  - id: "Rodando copy .env"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-t", "app", "cp", ".env.example", ".env"]
   - id: "Rodando generate"
     name: "gcr.io/cloud-builders/docker"
     args: ["exec", "-t", "app", "php", "/var/www/artisan", "key:generate"]
