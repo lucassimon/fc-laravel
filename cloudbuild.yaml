@@ -10,27 +10,29 @@ steps:
   #   args: ["exec", "-t", "app", "chmod", "-R", "775", "/var/www"]
   - id: "Rodando composer"
     name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "ls", "-la"]
+    args: ["exec", "-u", "root", "-t", "app", "ls", "-la"]
   - id: "Rodando copy .env"
     name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "cp", ".env.example", ".env"]
+    args: ["exec", "-u", "root", "-t", "app", "cp", ".env.example", ".env"]
   - id: "Rodando catt"
     name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "cat", ".env"]
+    args: ["exec", "-u", "root", "-t", "app", "cat", ".env"]
   # - id: "Rodando generate"
   #   name: "gcr.io/cloud-builders/docker"
-  #   args: ["exec", "-t", "app", "php", "/var/www/artisan", "key:generate"]
+  #   args: ["exec", "-u", "root", "-t", "app", "php", "/var/www/artisan", "key:generate"]
   # - id: "Rodando config cache"
   #   name: "gcr.io/cloud-builders/docker"
-  #   args: ["exec", "-t", "app", "php", "/var/www/artisan", "config:cache"]
+  #   args: ["exec", "-u", "root", "-t", "app", "php", "/var/www/artisan", "config:cache"]
   # - id: "Rodando migrate"
   #   name: "gcr.io/cloud-builders/docker"
-  #   args: ["exec", "-t", "app", "php", "/var/www/artisan", "migrate"]
+  #   args: ["exec", "-u", "root", "-t", "app", "php", "/var/www/artisan", "migrate"]
   # - id: "Rodando phpunit"
   #   name: "gcr.io/cloud-builders/docker"
   #   args:
   #     [
   #       "exec",
+  #       "-u",
+  #       "root",
   #       "-t",
   #       "app",
   #       "php",
