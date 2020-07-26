@@ -5,6 +5,9 @@ steps:
   - id: "Rodando docker ps"
     name: "gcr.io/cloud-builders/docker"
     args: ["ps"]
+  - id: "Rodando copy .env"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-t", "app", "chmod", "-R", "775", "/var/www"]
   - id: "Rodando composer"
     name: "gcr.io/cloud-builders/docker"
     args: ["exec", "-t", "app", "ls", "-la"]
