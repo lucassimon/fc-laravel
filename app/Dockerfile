@@ -11,6 +11,7 @@ RUN apk add --no-cache shadow bash mysql-client openssl \
     && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && ln -s public html \
+    && chmod -R 775 /var/www/ \
     && usermod -u 1000 www-data
 
 COPY composer.lock composer.json /var/www/
