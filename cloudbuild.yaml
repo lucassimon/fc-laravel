@@ -7,28 +7,31 @@ steps:
     args: ["ps"]
   - id: "Rodando composer"
     name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "composer", "install"]
-  - id: "Rodando copy .env"
+    args: ["exec", "-t", "app", "ls", "-la"]
+  - id: "Rodando catt"
     name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "cp", ".env.example", ".env"]
-  - id: "Rodando generate"
-    name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "php", "/var/www/artisan", "key:generate"]
-  - id: "Rodando config cache"
-    name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "php", "/var/www/artisan", "config:cache"]
-  - id: "Rodando migrate"
-    name: "gcr.io/cloud-builders/docker"
-    args: ["exec", "-t", "app", "php", "/var/www/artisan", "migrate"]
-  - id: "Rodando phpunit"
-    name: "gcr.io/cloud-builders/docker"
-    args:
-      [
-        "exec",
-        "-t",
-        "app",
-        "php",
-        "/var/www/vendor/bin/phunit",
-        "-c",
-        "/var/www/phpunit.xml",
-      ]
+    args: ["exec", "-t", "app", "cat", ".env"]
+  # - id: "Rodando copy .env"
+  #   name: "gcr.io/cloud-builders/docker"
+  #   args: ["exec", "-t", "app", "cp", ".env.example", ".env"]
+  # - id: "Rodando generate"
+  #   name: "gcr.io/cloud-builders/docker"
+  #   args: ["exec", "-t", "app", "php", "/var/www/artisan", "key:generate"]
+  # - id: "Rodando config cache"
+  #   name: "gcr.io/cloud-builders/docker"
+  #   args: ["exec", "-t", "app", "php", "/var/www/artisan", "config:cache"]
+  # - id: "Rodando migrate"
+  #   name: "gcr.io/cloud-builders/docker"
+  #   args: ["exec", "-t", "app", "php", "/var/www/artisan", "migrate"]
+  # - id: "Rodando phpunit"
+  #   name: "gcr.io/cloud-builders/docker"
+  #   args:
+  #     [
+  #       "exec",
+  #       "-t",
+  #       "app",
+  #       "php",
+  #       "/var/www/vendor/bin/phunit",
+  #       "-c",
+  #       "/var/www/phpunit.xml",
+  #     ]
