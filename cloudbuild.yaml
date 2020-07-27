@@ -1,4 +1,63 @@
 steps:
   - id: "Rodando docker-compose"
     name: "gcr.io/$PROJECT_ID/docker-compose"
-    args: ["-f", "docker-compose.cloudbuild.yml", "up", "-d"]
+    args: ["-f", "docker-compose.cloudbuild.yaml", "up", "-d"]
+  - id: "Rodando docker ps"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["ps"]
+  - id: "Rodando composer"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-u", "root", "-t", "app", "composer", "install"]
+  - id: "Rodando copy .env"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-u", "root", "-t", "app", "cp", ".env.example", ".env"]
+  - id: "Rodando generate"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "exec",
+        "-u",
+        "root",
+        "-t",
+        "app",
+        "php",
+        "/var/www/artisan",
+        "key:generate",
+      ]
+  - id: "Rodando ls -la"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-u", "root", "-t", "app", "ls", "-la"]
+  - id: "Rodando catt"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["exec", "-u", "root", "-t", "app", "cat", ".env"]
+  - id: "Rodando config cache"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "exec",
+        "-u",
+        "root",
+        "-t",
+        "app",
+        "php",
+        "/var/www/artisan",
+        "config:cache",
+      ]
+  - id: "Rodando migrate"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      ["exec", "-u", "root", "-t", "app", "php", "/var/www/artisan", "migrate"]
+  - id: "Rodando PhpUnit"
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "exec",
+        "-u",
+        "root",
+        "-t",
+        "app",
+        "php",
+        "/var/www/vendor/bin/phpunit",
+        "-c",
+        "/var/www/phpunit.xml",
+      ]
